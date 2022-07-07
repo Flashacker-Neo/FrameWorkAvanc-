@@ -1,0 +1,12 @@
+<div id="movies">
+
+    <div *ngFor="let movie of movies" class="movie-card">
+        <h5 class="title">{{movie.title}}</h5>
+
+        <div class="info">
+            <p>{{movie.overview}}</p>
+            <img [src]="'https://image.tmdb.org/t/p/w342'+movie.poster_path">
+        </div>
+    </div>
+
+</div>

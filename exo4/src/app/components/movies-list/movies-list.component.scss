@@ -1,0 +1,34 @@
+
+#movies {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .movie-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+        width: 284px;
+        height: 600px;
+        padding: 1rem;
+        margin: 1rem;
+        border-radius: 5px;
+        box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+
+        .info {
+            p {
+                margin: 0;
+                margin-bottom: 1rem;
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+    
+            img {
+                width: 250px;
+            }
+        }
+    }
+}
