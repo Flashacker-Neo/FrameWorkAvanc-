@@ -1,0 +1,8 @@
+{
+  "generator-jhipster:7.8.1": {
+    "promptValues": {
+      "packageName": "academy.campus.demo3",
+      "nativeLanguage": "en"
+    }
+  }
+}
