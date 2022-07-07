@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MovieDbApi } from './services/api.service';
 
 @Component({
   selector: 'app-root',
@@ -7,16 +6,5 @@ import { MovieDbApi } from './services/api.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-  movies: any = [];
-
-  constructor(private moviedbApi: MovieDbApi) {
-    moviedbApi.getList().subscribe(
-      (response: any) => {
-        console.log(response);
-        this.movies = response.results;
-      }
-    );
-  }
 
 }
