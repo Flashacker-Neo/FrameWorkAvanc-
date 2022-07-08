@@ -1,0 +1,25 @@
+{
+  "applications": "*",
+  "changelogDate": "20220708143515",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "mission",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Mission",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [],
+  "service": "no"
+}

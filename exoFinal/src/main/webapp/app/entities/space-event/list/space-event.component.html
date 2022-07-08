@@ -1,0 +1,101 @@
+<div>
+  <h2 id="page-heading" data-cy="SpaceEventHeading">
+    <span>Space Events</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="reset()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-space-event"
+        [routerLink]="['/space-event/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Space Event </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="spaceEvents?.length === 0">
+    <span>No spaceEvents found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="spaceEvents && spaceEvents.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="reset()">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="name"><span>Name</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="date"><span>Date</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="description"><span>Description</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="photo"><span>Photo</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="type"><span>Type</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="mission.name"><span>Mission</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
+        <tr *ngFor="let spaceEvent of spaceEvents; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/space-event', spaceEvent.id, 'view']">{{ spaceEvent.id }}</a>
+          </td>
+          <td>{{ spaceEvent.name }}</td>
+          <td>{{ spaceEvent.date | formatMediumDate }}</td>
+          <td>{{ spaceEvent.description }}</td>
+          <td>
+            <a *ngIf="spaceEvent.photo" (click)="openFile(spaceEvent.photo, spaceEvent.photoContentType)">
+              <img
+                [src]="'data:' + spaceEvent.photoContentType + ';base64,' + spaceEvent.photo"
+                style="max-height: 30px"
+                alt="spaceEvent image"
+              />
+            </a>
+            <span *ngIf="spaceEvent.photo">{{ spaceEvent.photoContentType }}, {{ byteSize(spaceEvent.photo) }}</span>
+          </td>
+          <td>{{ spaceEvent.type }}</td>
+          <td>
+            <div *ngIf="spaceEvent.mission">
+              <a [routerLink]="['/mission', spaceEvent.mission?.id, 'view']">{{ spaceEvent.mission?.name }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/space-event', spaceEvent.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/space-event', spaceEvent.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(spaceEvent)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

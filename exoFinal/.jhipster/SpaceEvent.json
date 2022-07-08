@@ -1,0 +1,53 @@
+{
+  "applications": "*",
+  "changelogDate": "20220708143514",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "space_event",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "photo",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "SpaceEventType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "LAUNCH,LANDING"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "SpaceEvent",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "mission",
+      "otherEntityRelationshipName": "spaceEvent",
+      "ownerSide": true,
+      "relationshipName": "mission",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "no"
+}

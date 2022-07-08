@@ -1,0 +1,63 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="spaceEvent">
+      <h2 data-cy="spaceEventDetailsHeading"><span>Space Event</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ spaceEvent.id }}</span>
+        </dd>
+        <dt><span>Name</span></dt>
+        <dd>
+          <span>{{ spaceEvent.name }}</span>
+        </dd>
+        <dt><span>Date</span></dt>
+        <dd>
+          <span>{{ spaceEvent.date | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Description</span></dt>
+        <dd>
+          <span>{{ spaceEvent.description }}</span>
+        </dd>
+        <dt><span>Photo</span></dt>
+        <dd>
+          <div *ngIf="spaceEvent.photo">
+            <a (click)="openFile(spaceEvent.photo, spaceEvent.photoContentType)">
+              <img
+                [src]="'data:' + spaceEvent.photoContentType + ';base64,' + spaceEvent.photo"
+                style="max-width: 100%"
+                alt="spaceEvent image"
+              />
+            </a>
+            {{ spaceEvent.photoContentType }}, {{ byteSize(spaceEvent.photo) }}
+          </div>
+        </dd>
+        <dt><span>Type</span></dt>
+        <dd>
+          <span>{{ spaceEvent.type }}</span>
+        </dd>
+        <dt><span>Mission</span></dt>
+        <dd>
+          <div *ngIf="spaceEvent.mission">
+            <a [routerLink]="['/mission', spaceEvent.mission?.id, 'view']">{{ spaceEvent.mission?.name }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/space-event', spaceEvent.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
