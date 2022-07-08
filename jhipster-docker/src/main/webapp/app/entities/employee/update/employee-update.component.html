@@ -16,6 +16,17 @@
         <div class="row mb-3">
           <label
             class="form-label"
+            jhiTranslate="demo3App.employee.businessId"
+            for="field_businessId"
+            [ngbTooltip]="'demo3App.employee.help.businessId' | translate"
+            >Business Id</label
+          >
+          <input type="text" class="form-control" name="businessId" id="field_businessId" data-cy="businessId" formControlName="businessId" />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
             jhiTranslate="demo3App.employee.firstName"
             for="field_firstName"
             [ngbTooltip]="'demo3App.employee.help.firstName' | translate"

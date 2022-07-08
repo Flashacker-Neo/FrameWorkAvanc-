@@ -18,6 +18,7 @@
         "title": "Employee"
       },
       "id": "ID",
+      "businessId": "Business Id",
       "firstName": "First Name",
       "lastName": "Last Name",
       "email": "Email",

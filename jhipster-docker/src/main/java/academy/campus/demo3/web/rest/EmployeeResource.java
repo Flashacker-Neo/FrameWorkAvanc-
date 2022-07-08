@@ -129,6 +129,9 @@ public class EmployeeResource {
         Optional<Employee> result = employeeRepository
             .findById(employee.getId())
             .map(existingEmployee -> {
+                if (employee.getBusinessId() != null) {
+                    existingEmployee.setBusinessId(employee.getBusinessId());
+                }
                 if (employee.getFirstName() != null) {
                     existingEmployee.setFirstName(employee.getFirstName());
                 }

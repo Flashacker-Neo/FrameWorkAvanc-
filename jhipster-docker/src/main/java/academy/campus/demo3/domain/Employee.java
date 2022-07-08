@@ -27,6 +27,9 @@ public class Employee implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "business_id")
+    private String businessId;
+
     /**
      * The firstname attribute.
      */
@@ -86,6 +89,19 @@ public class Employee implements Serializable {
 
     public String getFirstName() {
         return this.firstName;
+    }
+
+    public String getBusinessId() {
+        return this.businessId;
+    }
+
+    public Employee businessId(String businessId) {
+        this.setBusinessId(businessId);
+        return this;
+    }
+
+    public void setBusinessId(String businessId) {
+        this.businessId = businessId;
     }
 
     public Employee firstName(String firstName) {
@@ -256,6 +272,7 @@ public class Employee implements Serializable {
     public String toString() {
         return "Employee{" +
             "id=" + getId() +
+            ", businessId='" + getBusinessId() + "'" +
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +
             ", email='" + getEmail() + "'" +

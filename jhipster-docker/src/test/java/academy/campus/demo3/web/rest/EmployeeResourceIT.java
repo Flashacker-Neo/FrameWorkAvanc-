@@ -31,6 +31,9 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class EmployeeResourceIT {
 
+    private static final String DEFAULT_BUSINESS_ID = "AAAAAAAAAA";
+    private static final String UPDATED_BUSINESS_ID = "BBBBBBBBBB";
+
     private static final String DEFAULT_FIRST_NAME = "AAAAAAAAAA";
     private static final String UPDATED_FIRST_NAME = "BBBBBBBBBB";
 
@@ -77,6 +80,7 @@ class EmployeeResourceIT {
      */
     public static Employee createEntity(EntityManager em) {
         Employee employee = new Employee()
+            .businessId(DEFAULT_BUSINESS_ID)
             .firstName(DEFAULT_FIRST_NAME)
             .lastName(DEFAULT_LAST_NAME)
             .email(DEFAULT_EMAIL)
@@ -95,6 +99,7 @@ class EmployeeResourceIT {
      */
     public static Employee createUpdatedEntity(EntityManager em) {
         Employee employee = new Employee()
+            .businessId(UPDATED_BUSINESS_ID)
             .firstName(UPDATED_FIRST_NAME)
             .lastName(UPDATED_LAST_NAME)
             .email(UPDATED_EMAIL)
@@ -123,6 +128,7 @@ class EmployeeResourceIT {
         List<Employee> employeeList = employeeRepository.findAll();
         assertThat(employeeList).hasSize(databaseSizeBeforeCreate + 1);
         Employee testEmployee = employeeList.get(employeeList.size() - 1);
+        assertThat(testEmployee.getBusinessId()).isEqualTo(DEFAULT_BUSINESS_ID);
         assertThat(testEmployee.getFirstName()).isEqualTo(DEFAULT_FIRST_NAME);
         assertThat(testEmployee.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
         assertThat(testEmployee.getEmail()).isEqualTo(DEFAULT_EMAIL);
@@ -162,6 +168,7 @@ class EmployeeResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(employee.getId().intValue())))
+            .andExpect(jsonPath("$.[*].businessId").value(hasItem(DEFAULT_BUSINESS_ID)))
             .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME)))
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
@@ -183,6 +190,7 @@ class EmployeeResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(employee.getId().intValue()))
+            .andExpect(jsonPath("$.businessId").value(DEFAULT_BUSINESS_ID))
             .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME))
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
@@ -212,6 +220,7 @@ class EmployeeResourceIT {
         // Disconnect from session so that the updates on updatedEmployee are not directly saved in db
         em.detach(updatedEmployee);
         updatedEmployee
+            .businessId(UPDATED_BUSINESS_ID)
             .firstName(UPDATED_FIRST_NAME)
             .lastName(UPDATED_LAST_NAME)
             .email(UPDATED_EMAIL)
@@ -232,6 +241,7 @@ class EmployeeResourceIT {
         List<Employee> employeeList = employeeRepository.findAll();
         assertThat(employeeList).hasSize(databaseSizeBeforeUpdate);
         Employee testEmployee = employeeList.get(employeeList.size() - 1);
+        assertThat(testEmployee.getBusinessId()).isEqualTo(UPDATED_BUSINESS_ID);
         assertThat(testEmployee.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
         assertThat(testEmployee.getLastName()).isEqualTo(UPDATED_LAST_NAME);
         assertThat(testEmployee.getEmail()).isEqualTo(UPDATED_EMAIL);
@@ -323,6 +333,7 @@ class EmployeeResourceIT {
         List<Employee> employeeList = employeeRepository.findAll();
         assertThat(employeeList).hasSize(databaseSizeBeforeUpdate);
         Employee testEmployee = employeeList.get(employeeList.size() - 1);
+        assertThat(testEmployee.getBusinessId()).isEqualTo(DEFAULT_BUSINESS_ID);
         assertThat(testEmployee.getFirstName()).isEqualTo(DEFAULT_FIRST_NAME);
         assertThat(testEmployee.getLastName()).isEqualTo(UPDATED_LAST_NAME);
         assertThat(testEmployee.getEmail()).isEqualTo(UPDATED_EMAIL);
@@ -345,6 +356,7 @@ class EmployeeResourceIT {
         partialUpdatedEmployee.setId(employee.getId());
 
         partialUpdatedEmployee
+            .businessId(UPDATED_BUSINESS_ID)
             .firstName(UPDATED_FIRST_NAME)
             .lastName(UPDATED_LAST_NAME)
             .email(UPDATED_EMAIL)
@@ -365,6 +377,7 @@ class EmployeeResourceIT {
         List<Employee> employeeList = employeeRepository.findAll();
         assertThat(employeeList).hasSize(databaseSizeBeforeUpdate);
         Employee testEmployee = employeeList.get(employeeList.size() - 1);
+        assertThat(testEmployee.getBusinessId()).isEqualTo(UPDATED_BUSINESS_ID);
         assertThat(testEmployee.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
         assertThat(testEmployee.getLastName()).isEqualTo(UPDATED_LAST_NAME);
         assertThat(testEmployee.getEmail()).isEqualTo(UPDATED_EMAIL);
